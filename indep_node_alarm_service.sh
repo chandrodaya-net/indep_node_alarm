@@ -1,10 +1,10 @@
-cd /home/ubuntu/indep_node_alarm;echo "[Unit]
+cd /home/alert/indep_node_alarm;echo "[Unit]
 Description=indep_node_alarm
 After=network-online.target
 [Service]
-User=ubuntu
-WorkingDirectory=/home/ubuntu/indep_node_alarm
-ExecStart=/usr/bin/python3 /home/ubuntu/indep_node_alarm/indep_node_alarm.py
+User=alert
+WorkingDirectory=/home/alert/indep_node_alarm
+ExecStart=/usr/bin/python3 /home/alert/indep_node_alarm/indep_node_alarm.py
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=indep_node_alarm

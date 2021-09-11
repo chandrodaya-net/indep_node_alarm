@@ -1,2 +1,2 @@
-pypd
 requests
+pdpyras

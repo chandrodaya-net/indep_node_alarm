@@ -4,7 +4,7 @@ After=network-online.target
 [Service]
 User=alert
 WorkingDirectory=/home/alert/indep_node_alarm
-ExecStart=/usr/bin/python3 /home/alert/indep_node_alarm/indep_node_alarm.py
+ExecStart=/home/alert/venv/bin/python /home/alert/indep_node_alarm/indep_node_alarm.py
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=indep_node_alarm

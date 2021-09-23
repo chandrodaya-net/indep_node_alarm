@@ -8,7 +8,7 @@ ExecStart=/home/alert/venv/bin/python /home/alert/indep_node_alarm/indep_node_al
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=indep_node_alarm
-Restart=always
+Restart=on-failure
 RestartSec=200
 LimitNOFILE=4096
 [Install]

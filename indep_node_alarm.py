@@ -4,18 +4,25 @@ import requests # sudo pip3 install requests
 from pdpyras import APISession
 import subprocess
 import shutil
-import config_juno as config 
+import config 
 import sys
 from utils import create_logger
+import traceback
 # import socket
 # print(socket.gethostname())
 
 logger = create_logger(config.log_file_path, __name__ , config.log_level, True)
 
 def send_msg_to_telegram(msg):
-    requestURL = "https://api.telegram.org/bot" + str(config.telegram_token) + "/sendMessage?chat_id=" + config.telegram_chat_id + "&text="
-    requestURL = requestURL + str(msg)
-    response = requests.get(requestURL, timeout=1)
+    try:
+        requestURL = "https://api.telegram.org/bot" + str(config.telegram_token) + "/sendMessage?chat_id=" + config.telegram_chat_id + "&text="
+        requestURL = requestURL + str(msg)
+        requests.get(requestURL, timeout=1)
+    except Exception:
+        error_msg = traceback.format_exc()
+        logger.error(error_msg)
+            
+    
 
 def loop():
     logger.info("start loop")
@@ -108,11 +115,9 @@ def loop():
             
             logger.info("""send alert to pageyduty:
                            alarm_content: {}""".format(alarm_content))        
-            try:
-                logger.info("alarm msg to telegram")
-                send_msg_to_telegram(alarm_content)
-            except:
-                pass
+            
+            logger.info("alarm msg to telegram")
+            send_msg_to_telegram(alarm_content)
         else:
             logger.info("Ok msg to telegram")
             msg = "{}: status OK!".format(config.node_name)

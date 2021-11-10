@@ -100,21 +100,22 @@ def loop():
                                                                                  height_end=height_end)
         logger.info("alarm={}".format(alarm))
         if alarm:
-            session = APISession(config.pd_api_key, default_from=config.pd_default_email)
-            payload = {
-              "type": "incident",
-              "title": alarm_title,
-              "service": {"id": config.pd_service_id, "type": "service_reference"},
-              "urgency": "high",
-              "body": {
-                  "type": "incident_body",
-                  "details": alarm_content
+            if config.pd_notification:
+                session = APISession(config.pd_api_key, default_from=config.pd_default_email)
+                payload = {
+                  "type": "incident",
+                  "title": alarm_title,
+                  "service": {"id": config.pd_service_id, "type": "service_reference"},
+                  "urgency": "high",
+                  "body": {
+                      "type": "incident_body",
+                      "details": alarm_content
+                    }
                 }
-            }
-            session.rpost("incidents", json=payload)
-            
-            logger.info("""send alert to pageyduty:
-                           alarm_content: {}""".format(alarm_content))        
+                session.rpost("incidents", json=payload)
+                
+                logger.info("""send alert to pageyduty:
+                               alarm_content: {}""".format(alarm_content))        
             
             logger.info("alarm msg to telegram")
             send_msg_to_telegram(alarm_content)
